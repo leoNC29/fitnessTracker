@@ -1,22 +1,32 @@
-function calculartmb() {
-  let tmb;
+function calculadora() {
+  console.log("Calculando...");
   let idade, peso, altura, sexo;
   idade = Number(document.getElementById("idade").value);
   peso = Number(document.getElementById("peso").value);
   altura = Number(document.getElementById("altura").value);
   sexo = document.getElementById("sexo").value;
+  let nivelAtividade = document.getElementById("atividade").value;
 
   if (altura > 3) {
     altura /= 100;
   }
   let alturaCm = altura * 100;
-  sexo = document.getElementById("sexo").value;
+
   if (!idade || !peso || !altura) {
     document.getElementById("resultado").innerHTML =
       "Por favor, preencha todos os campos.";
     return;
   }
 
+  let tmb = calcularTmb(peso, alturaCm, idade, sexo);
+  calcularGet(tmb, nivelAtividade);
+  calcularIMC(peso, altura);
+  objetivo();
+  alertaHidratacao(peso, nivelAtividade);
+}
+
+function calcularTmb(peso, alturaCm, idade, sexo) {
+  let tmb;
   if (sexo === "masculino") {
     tmb = 10 * peso + 6.25 * alturaCm - 5 * idade + 5;
   } else {
@@ -25,15 +35,10 @@ function calculartmb() {
   document.getElementById("resultado").innerHTML = `
 Sua Taxa Metabólica Basal é: ${tmb.toFixed(0)} calorias por dia.
 `;
-  calcularGet(tmb);
-  calcularIMC(peso, altura);
-  objetivo();
-  alertaHidratacao(peso);
   return tmb;
 }
 
-function calcularGet(tmb) {
-  let nivelAtividade = document.getElementById("atividade").value;
+function calcularGet(tmb, nivelAtividade) {
   switch (nivelAtividade) {
     case "sedentario":
       tmb *= 1.2;
@@ -93,8 +98,14 @@ function objetivo() {
   }
 }
 
-function alertaHidratacao(peso) {
+function alertaHidratacao(peso, nivelAtividade) {
   let hidratacao = peso * 35;
+  if (
+    nivelAtividade === "moderadamente_ativo" ||
+    nivelAtividade === "muito_ativo"
+  ) {
+    hidratacao = peso * 40;
+  }
   document.getElementById("hidratação").innerHTML = `
 Para manter uma boa hidratação, você deve consumir  ${hidratacao} ml de água por dia.
 `;
