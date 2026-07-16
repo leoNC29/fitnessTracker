@@ -19,9 +19,9 @@ function calculadora() {
   }
 
   let tmb = calcularTmb(peso, alturaCm, idade, sexo);
-  calcularGet(tmb, nivelAtividade);
+  let get = calcularGet(tmb, nivelAtividade);
   calcularIMC(peso, altura);
-  objetivo();
+  objetivo(get);
   alertaHidratacao(peso, nivelAtividade);
 }
 
@@ -53,9 +53,11 @@ function calcularGet(tmb, nivelAtividade) {
       tmb *= 1.725;
       break;
   }
+  let get = tmb;
   document.getElementById("get").innerHTML = `
 Seu Gasto Calórico Diário é: ${tmb.toFixed(0)} calorias por dia.
 `;
+  return get;
 }
 
 function calcularIMC(peso, altura) {
@@ -84,17 +86,17 @@ Seu IMC é: ${imc.toFixed(2)}. Você está com obesidade grave.
   return imc;
 }
 
-function objetivo() {
+function objetivo(get) {
   let objetivo = document.getElementById("objetivo").value;
   if (objetivo === "emagrecer") {
     document.getElementById("objetivo_Peso").innerHTML =
-      `Para emagrecer de forma saudável, você deve consumir por volta de 300 a 500 calorias a menos do seu gasto calórico diário.`;
+      `Para emagrecer de forma saudável, você deve consumir de 300 a 500 calorias a menos do seu gasto calórico diário, por volta de ${get.toFixed(0) - 300} a ${get.toFixed(0) - 500} calorias por dia.`;
   } else if (objetivo === "manutenção") {
     document.getElementById("objetivo_Peso").innerHTML =
       `Para manter o peso, você deve consumir aproximadamente a mesma quantidade de calorias que gasta diariamente.`;
   } else if (objetivo === "ganhar_peso") {
     document.getElementById("objetivo_Peso").innerHTML =
-      `Para ganhar peso de forma saudável, você deve consumir mais calorias do que queima, por volta de 300 a 500 calorias a mais do seu gasto calórico diário.`;
+      `Para ganhar peso de forma saudável, você deve consumir mais calorias do que queima, consumindo de 300 a 500 calorias a mais do seu gasto calórico diário, por volta de ${Number(get.toFixed(0)) + 300} a ${Number(get.toFixed(0)) + 500} calorias por dia.`;
   }
 }
 
