@@ -34,6 +34,23 @@ async function criarUsuario(
   );
   return usuario;
 }
+
+async function usuarioExiste(email) {
+  const [usuario] = await db.query("SELECT * FROM resultado WHERE email = ?", [
+    email,
+  ]);
+  return usuario[0];
+}
+
+async function buscarPorEmail(email) {
+  const [rows] = await db.query("SELECT * FROM resultado WHERE email = ?", [
+    email,
+  ]);
+  return rows;
+}
+
 module.exports = {
   criarUsuario,
+  usuarioExiste,
+  buscarPorEmail,
 };
