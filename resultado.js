@@ -14,7 +14,7 @@ async function buscarUsuario() {
   console.log("Dados recebidos:", dados);
 
   if (!dados.existe) {
-    lista.innerHTML = "<li>Nenhum usuário encontrado</li>";
+    lista.innerHTML = "<li>Email nao corresponde a nenhum usuario</li>";
     return;
   }
 

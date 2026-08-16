@@ -26,11 +26,12 @@ async function calculadora() {
   let obj = objetivo(gasto);
   let hidratacao = alertaHidratacao(peso, nivel_de_atividade);
   const resposta = await fetch(
-    `http://localhost:3000/usuarios/verificar?email=${encodeURIComponent(email)}&nome=${encodeURIComponent(nome)}`,
+    `http://localhost:3000/usuarios/verificar?email=${encodeURIComponent(email)}`,
   );
   const emailNome = await resposta.json();
   if (emailNome.existe) {
-    console.log("O usuário já existe no banco de dados.");
+    document.getElementById("erro").innerHTML =
+      "Email já cadastrado. Por favor, utilize outro email.";
     return;
   }
 
