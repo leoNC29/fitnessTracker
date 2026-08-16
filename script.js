@@ -1,28 +1,62 @@
-function calculadora() {
+async function calculadora() {
   console.log("Calculando...");
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
   let idade, peso, altura, sexo;
   idade = Number(document.getElementById("idade").value);
   peso = Number(document.getElementById("peso").value);
   altura = Number(document.getElementById("altura").value);
   sexo = document.getElementById("sexo").value;
-  let nivelAtividade = document.getElementById("atividade").value;
+  let nivel_de_atividade = document.getElementById("atividade").value;
 
   if (altura > 3) {
     altura /= 100;
   }
   let alturaCm = altura * 100;
 
-  if (!idade || !peso || !altura) {
+  if (!idade || !peso || !altura || !nome || !email) {
     document.getElementById("resultado").innerHTML =
       "Por favor, preencha todos os campos.";
     return;
   }
 
   let tmb = calcularTmb(peso, alturaCm, idade, sexo);
-  let get = calcularGet(tmb, nivelAtividade);
-  calcularIMC(peso, altura);
-  objetivo(get);
-  alertaHidratacao(peso, nivelAtividade);
+  let gasto = calcularGet(tmb, nivel_de_atividade);
+  let imc = calcularIMC(peso, altura);
+  let obj = objetivo(gasto);
+  let hidratacao = alertaHidratacao(peso, nivel_de_atividade);
+  const resposta = await fetch(
+    `http://localhost:3000/usuarios/verificar?email=${encodeURIComponent(email)}&nome=${encodeURIComponent(nome)}`,
+  );
+  const emailNome = await resposta.json();
+  if (emailNome.existe) {
+    console.log("O usuário já existe no banco de dados.");
+    return;
+  }
+
+  const resultado = {
+    nome,
+    email,
+    idade,
+    peso,
+    altura,
+    sexo,
+    nivel_de_atividade,
+    tmb,
+    gasto,
+    imc,
+    obj,
+    hidratacao,
+  };
+  const dadosUsuario = await fetch("http://localhost:3000/usuarios", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultado),
+  });
+  const respostaUsuario = await dadosUsuario.json();
+  console.log("Usuário cadastrado com sucesso");
 }
 
 function calcularTmb(peso, alturaCm, idade, sexo) {
@@ -38,8 +72,8 @@ Sua Taxa Metabólica Basal é: ${tmb.toFixed(0)} calorias por dia.
   return tmb;
 }
 
-function calcularGet(tmb, nivelAtividade) {
-  switch (nivelAtividade) {
+function calcularGet(tmb, nivel_de_atividade) {
+  switch (nivel_de_atividade) {
     case "sedentario":
       tmb *= 1.2;
       break;
@@ -98,17 +132,19 @@ function objetivo(get) {
     document.getElementById("objetivo_Peso").innerHTML =
       `Para ganhar peso de forma saudável, você deve consumir mais calorias do que queima, consumindo de 300 a 500 calorias a mais do seu gasto calórico diário, por volta de ${Number(get.toFixed(0)) + 300} a ${Number(get.toFixed(0)) + 500} calorias por dia.`;
   }
+  return objetivo;
 }
 
-function alertaHidratacao(peso, nivelAtividade) {
+function alertaHidratacao(peso, nivel_de_atividade) {
   let hidratacao = peso * 35;
   if (
-    nivelAtividade === "moderadamente_ativo" ||
-    nivelAtividade === "muito_ativo"
+    nivel_de_atividade === "moderadamente_ativo" ||
+    nivel_de_atividade === "muito_ativo"
   ) {
     hidratacao = peso * 40;
   }
   document.getElementById("hidratação").innerHTML = `
 Para manter uma boa hidratação, você deve consumir  ${hidratacao} ml de água por dia.
 `;
+  return hidratacao;
 }
