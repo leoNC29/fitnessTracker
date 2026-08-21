@@ -1,8 +1,12 @@
 # 🏋️ Fitness Tracker
 
-Aplicação web desenvolvida para realizar cálculos relacionados a objetivos fitness e armazenar informações de usuários em um banco de dados MySQL.
+Aplicação web desenvolvida para realizar cálculos relacionados a objetivos fitness e armazenar informações de usuários.
 
-O projeto utiliza **HTML, CSS e JavaScript** no frontend e **Node.js, Express e MySQL** no backend, com uma API REST para comunicação entre as partes da aplicação.
+O projeto utiliza **HTML, CSS e JavaScript** no frontend e **Node.js, Express e MySQL** no backend, com uma API REST para comunicação entre a aplicação e o banco de dados.
+
+## 🌐 Projeto online
+
+👉 **[Acessar o Fitness Tracker](https://fitness-tracker-xi-gules.vercel.app/)**
 
 ## 🚀 Funcionalidades
 
@@ -15,10 +19,6 @@ O projeto utiliza **HTML, CSS e JavaScript** no frontend e **Node.js, Express e 
 - Armazenamento de usuários no MySQL
 - Busca de usuário por e-mail
 - Verificação de usuário por e-mail
-
-## 📸 Demonstração
-
-### Calculadora
 
 ## 🛠️ Tecnologias
 
@@ -61,8 +61,6 @@ Models
 MySQL
 ```
 
-Essa estrutura permite separar as rotas, regras de negócio e operações realizadas no banco de dados.
-
 ## 📡 API
 
 Principais endpoints:
@@ -96,7 +94,6 @@ fitnesstracker/
 │   ├── models/
 │   ├── routes/
 │   ├── services/
-│   ├── .env
 │   └── server.js
 │
 ├── index.html
