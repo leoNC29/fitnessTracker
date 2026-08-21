@@ -21,7 +21,7 @@ async function buscarUsuario() {
   dados.usuario.forEach((usuario) => {
     const item = document.createElement("li");
 
-    item.textContent = `${usuario.nome} - ${usuario.email} - ${usuario.idade} - ${usuario.peso}kg - ${usuario.altura}m - ${usuario.sexo} - ${usuario.nivel_de_atividade} - TMB: ${usuario.tmb} - Gasto: ${usuario.gasto} - IMC: ${usuario.imc} - Objetivo: ${usuario.obj} - Hidratação: ${usuario.hidratacao}`;
+    item.innerHTML = ` Nome: ${usuario.nome}<br /> - Email: ${usuario.email}<br /> - Idade: ${usuario.idade}<br /> - Peso: ${usuario.peso}kg<br /> - Altura: ${usuario.altura}m<br /> - Sexo: ${usuario.sexo}<br /> - Nível de Atividade: ${usuario.nivel_de_atividade}<br /> - TMB: ${usuario.tmb}<br /> - Gasto: ${usuario.gasto}<br /> - IMC: ${usuario.imc}<br /> - Objetivo: ${usuario.obj}<br /> - Hidratação: ${usuario.hidratacao}`;
     lista.appendChild(item);
   });
 }
