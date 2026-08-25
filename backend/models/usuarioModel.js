@@ -1,7 +1,6 @@
 const db = require("../config/db");
 
 async function criarUsuario(
-  id,
   nome,
   email,
   idade,
