@@ -42,12 +42,18 @@ async function criar(req, res) {
 async function verificarExistencia(req, res) {
   try {
     const { email } = req.query;
+
     const usuario = await usuarioService.verificarUsuarioExistente(email);
+
     res.json({ existe: !!usuario });
+
     console.log("Verificação de existência do usuário realizada com sucesso.");
   } catch (erro) {
     console.error("ERRO AO VERIFICAR USUÁRIO:", erro);
-    res.status(500).json({ error: "Erro interno" });
+    res.status(500).json({
+      error: erro.message,
+      code: erro.code,
+    });
   }
 }
 
