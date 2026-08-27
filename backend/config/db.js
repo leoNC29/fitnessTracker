@@ -7,7 +7,7 @@ require("dotenv").config();
 let certificado;
 
 if (process.env.DB_SSL_CA) {
-  certificado = Buffer.from(process.env.DB_SSL_CA, "base64").toString("utf8");
+  certificado = process.env.DB_SSL_CA.replace(/\\n/g, "\n");
 } else {
   certificado = fs.readFileSync(
     path.join(__dirname, "../certificado_mysql.pem"),
