@@ -33,9 +33,9 @@ async function criar(req, res) {
       hidratacao,
     );
     res.status(201).json(user);
-  } catch (error) {
-    console.error("Erro ao criar usuário:", error);
-    res.status(500).json({ error: error.message });
+  } catch (erro) {
+    console.error("ERRO AO VERIFICAR USUÁRIO:", erro);
+    res.status(500).json({ error: "Erro interno" });
   }
 }
 
