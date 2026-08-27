@@ -1,17 +1,22 @@
 async function calculadora() {
   console.log("Calculando...");
+
   const nome = document.getElementById("nome").value;
   const email = document.getElementById("email").value;
+
   let idade, peso, altura, sexo;
+
   idade = Number(document.getElementById("idade").value);
   peso = Number(document.getElementById("peso").value);
   altura = Number(document.getElementById("altura").value);
   sexo = document.getElementById("sexo").value;
+
   let nivel_de_atividade = document.getElementById("atividade").value;
 
   if (altura > 3) {
     altura /= 100;
   }
+
   let alturaCm = altura * 100;
 
   if (!idade || !peso || !altura || !nome || !email) {
@@ -25,10 +30,14 @@ async function calculadora() {
   let imc = calcularIMC(peso, altura);
   let obj = objetivo(gasto);
   let hidratacao = alertaHidratacao(peso, nivel_de_atividade);
+
+  // Verifica se o e-mail já está cadastrado
   const resposta = await fetch(
-    `http://localhost:3000/usuarios/verificar?email=${encodeURIComponent(email)}`,
+    `https://fitnesstracker-7v0x.onrender.com/usuarios/verificar?email=${encodeURIComponent(email)}`,
   );
+
   const emailNome = await resposta.json();
+
   if (emailNome.existe) {
     document.getElementById("erro").innerHTML =
       "Email já cadastrado. Por favor, utilize outro email.";
@@ -49,17 +58,23 @@ async function calculadora() {
     obj,
     hidratacao,
   };
-  const dadosUsuario = await fetch("http://localhost:3000/usuarios", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+
+  // Cadastra o usuário
+  const dadosUsuario = await fetch(
+    "https://fitnesstracker-7v0x.onrender.com/usuarios",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultado),
     },
-    body: JSON.stringify(resultado),
-  });
+  );
+
   const respostaUsuario = await dadosUsuario.json();
+
   console.log("Usuário cadastrado com sucesso");
 }
-
 function calcularTmb(peso, alturaCm, idade, sexo) {
   let tmb;
   if (sexo === "masculino") {
