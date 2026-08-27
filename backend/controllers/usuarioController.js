@@ -3,7 +3,6 @@ const usuarioService = require("../services/usuarioService");
 async function criar(req, res) {
   try {
     const {
-      id,
       nome,
       email,
       idade,
@@ -18,7 +17,6 @@ async function criar(req, res) {
       hidratacao,
     } = req.body;
     const user = await usuarioService.cadastrarUsuario(
-      id,
       nome,
       email,
       idade,

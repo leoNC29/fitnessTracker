@@ -1,7 +1,6 @@
 const usuarioModel = require("../models/usuarioModel");
 
 async function cadastrarUsuario(
-  id,
   nome,
   email,
   idade,
@@ -16,7 +15,6 @@ async function cadastrarUsuario(
   hidratacao,
 ) {
   return await usuarioModel.criarUsuario(
-    id,
     nome,
     email,
     idade,
