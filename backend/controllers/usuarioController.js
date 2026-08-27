@@ -34,8 +34,11 @@ async function criar(req, res) {
     );
     res.status(201).json(user);
   } catch (erro) {
-    console.error("ERRO AO VERIFICAR USUÁRIO:", erro);
-    res.status(500).json({ error: "Erro interno" });
+    console.error("ERRO AO CRIAR USUÁRIO:", erro);
+    res.status(500).json({
+      error: erro.message,
+      code: erro.code,
+    });
   }
 }
 
